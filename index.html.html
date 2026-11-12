@@ -1,0 +1,1051 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOLAN'S FOREX</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --gold: #e8b84b;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: white;
+    background: #080d18;
+    min-height: 100vh;
+}
+
+/* BACKGROUND PHOTOS */
+
+.photo-fill {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: blur(18px) brightness(0.75);
+    transform: scale(1.08);
+    z-index: -3;
+}
+
+.photo-background {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    filter: brightness(1.08) contrast(1.05);
+    z-index: -2;
+}
+
+.background-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.08);
+    z-index: -1;
+}
+
+/* WELCOME PAGE */
+
+#welcomePage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.welcome-card {
+    width: 100%;
+    max-width: 430px;
+    text-align: center;
+    padding: 45px 30px;
+    background: rgba(0,0,0,0.12);
+    border: 1px solid var(--gold);
+    border-radius: 18px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.12);
+}
+
+.welcome-card h1 {
+    font-family: "Script MT Bold", cursive;
+    color: var(--gold);
+    font-size: 42px;
+    line-height: 1.25;
+    text-shadow: 2px 3px 6px black;
+    margin-bottom: 25px;
+}
+
+.welcome-card input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    background: white;
+    color: #111;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 7px;
+    padding: 12px 20px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.gold-button {
+    background: var(--gold);
+    color: #111;
+    width: 100%;
+    font-size: 16px;
+}
+
+#errorMessage {
+    color: #ff7777;
+    margin-top: 12px;
+    min-height: 20px;
+    text-shadow: 1px 1px 3px black;
+}
+
+/* MAIN PAGE */
+
+#mainPage {
+    display: none;
+    position: relative;
+    min-height: 100vh;
+    padding: 25px 15px 50px;
+    overflow: hidden;
+}
+
+#mainPage .photo-fill {
+    filter: blur(18px) brightness(0.35);
+}
+
+#mainPage .photo-background {
+    filter: brightness(0.45) contrast(1.08);
+}
+
+#mainPage .background-overlay {
+    background: rgba(0,0,0,0.30);
+}
+
+.container {
+    width: 100%;
+    max-width: 1050px;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* HEADER */
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 25px 15px;
+    background: transparent;
+    border: 1px solid rgba(232,184,75,0.8);
+    border-radius: 14px;
+}
+
+header h1 {
+    font-family: "Script MT Bold", cursive;
+    font-size: 43px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-shadow: 2px 3px 7px black;
+}
+
+header p {
+    color: white;
+    letter-spacing: 4px;
+    font-size: 13px;
+    margin-top: 8px;
+    text-shadow: 2px 2px 5px black;
+}
+
+/* PANELS */
+
+.panel {
+    background: transparent;
+    border: 1px solid rgba(232,184,75,0.85);
+    border-radius: 13px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.panel h2 {
+    color: var(--gold);
+    font-size: 21px;
+    margin-bottom: 17px;
+    text-shadow: 2px 2px 5px black;
+}
+
+.panel h3 {
+    color: var(--gold);
+    margin: 18px 0 10px;
+    text-shadow: 2px 2px 5px black;
+}
+
+.gold-line {
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 18px;
+    opacity: 0.9;
+}
+
+/* PROGRESS */
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px black;
+}
+
+.progress-track {
+    width: 100%;
+    height: 13px;
+    background: rgba(30,35,45,0.75);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--gold);
+    transition: width 0.3s;
+}
+
+/* CHECKLIST */
+
+.check-group {
+    margin-bottom: 20px;
+}
+
+.check-group h3 {
+    color: var(--gold);
+    font-size: 17px;
+    margin-bottom: 12px;
+}
+
+.check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 5px;
+    margin: 7px 0;
+    line-height: 1.5;
+    background: transparent;
+}
+
+.check-item input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.check-item label {
+    cursor: pointer;
+    color: white;
+    text-shadow: 2px 2px 5px black;
+}
+
+/* LISTS */
+
+.rules-list {
+    padding-left: 25px;
+    line-height: 1.9;
+}
+
+.rules-list li {
+    margin-bottom: 5px;
+    color: white;
+    text-shadow: 2px 2px 5px black;
+}
+
+/* POSITION SIZE CALCULATOR */
+
+.calculator-panel {
+    background: #141922;
+    border: 1px solid rgba(232,184,75,0.75);
+    border-radius: 12px;
+}
+
+.calculator-panel h2 {
+    font-size: 23px;
+    margin-bottom: 10px;
+}
+
+.calculator-description {
+    color: #999;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.field {
+    min-width: 0;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #d0d0d0;
+    font-size: 14px;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    min-width: 0;
+    padding: 14px;
+    border-radius: 7px;
+    border: 1px solid #303744;
+    background: #090e16;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: var(--gold);
+}
+
+.field select option,
+.field select optgroup {
+    background: #141922;
+    color: white;
+}
+
+.conversion-note {
+    color: #999;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+
+.calculator-results {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.result-card {
+    background: #0d121b;
+    border: 1px solid #29313e;
+    border-radius: 9px;
+    padding: 17px;
+    min-height: 84px;
+}
+
+.result-label {
+    display: block;
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 9px;
+}
+
+.result-value {
+    display: block;
+    color: var(--gold);
+    font-size: 21px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+.lot-result {
+    grid-column: 1 / -1;
+    background: #0d121b;
+    border: 1px solid #98732e;
+    border-radius: 9px;
+    padding: 25px 15px;
+    text-align: center;
+}
+
+.lot-result .result-label {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.lot-result .result-value {
+    font-size: 34px;
+}
+
+.calculator-error {
+    color: #ff7777;
+    font-size: 13px;
+    margin-top: 14px;
+    min-height: 18px;
+}
+
+.small-note {
+    color: #999;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 18px;
+}
+
+/* BUTTONS */
+
+.button-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.button-row button {
+    flex: 1;
+    min-width: 180px;
+}
+
+.reset-button {
+    background: #a83232;
+    color: white;
+}
+
+.screenshot-button {
+    background: var(--gold);
+    color: #111;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: white;
+    background: transparent;
+    border: 1px solid rgba(232,184,75,0.7);
+    border-radius: 10px;
+    margin-top: 20px;
+    line-height: 1.8;
+    text-shadow: 2px 2px 5px black;
+}
+
+/* MOBILE */
+
+@media (max-width:600px) {
+    header h1 {
+        font-size: 32px;
+    }
+
+    header p {
+        font-size: 10px;
+        letter-spacing: 2px;
+    }
+
+    .calculator-grid,
+    .calculator-results {
+        grid-template-columns: 1fr;
+    }
+
+    .lot-result {
+        grid-column: 1;
+    }
+
+    .lot-result .result-value {
+        font-size: 29px;
+    }
+
+    .panel {
+        padding: 16px;
+    }
+
+    .welcome-card h1 {
+        font-size: 34px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- WELCOME PAGE -->
+
+<section id="welcomePage">
+
+    <img class="photo-fill" src="messi.jpg" alt="">
+    <img class="photo-background" src="messi.jpg" alt="Messi background">
+    <div class="background-overlay"></div>
+
+    <div class="welcome-card">
+        <h1>WELCOME NOLAN</h1>
+
+        <input type="password" id="passwordInput" placeholder="Enter your password">
+
+        <button class="gold-button" onclick="unlockWebsite()">
+            ENTER WEBSITE
+        </button>
+
+        <div id="errorMessage"></div>
+    </div>
+</section>
+
+<!-- MAIN WEBSITE -->
+
+<section id="mainPage">
+
+    <img class="photo-fill" src="arsenal.jpg" alt="">
+    <img class="photo-background" src="arsenal.jpg" alt="Arsenal background">
+    <div class="background-overlay"></div>
+
+    <div class="container">
+
+        <header>
+            <h1>NOLAN'S FOREX</h1>
+            <p>PRICE ACTION • ICT</p>
+        </header>
+
+        <!-- PROGRESS -->
+
+        <section class="panel">
+            <h2>YOUR TRADING PROGRESS</h2>
+            <div class="gold-line"></div>
+
+            <div class="progress-info">
+                <span>Checklist Progress</span>
+                <span id="progressText">0 / 11 Completed</span>
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </section>
+
+        <!-- TRADE ENTRY CHECKLIST -->
+
+        <section class="panel" id="checklistArea">
+
+            <h2>TRADE ENTRY CHECKLIST</h2>
+            <div class="gold-line"></div>
+
+            <div class="check-group">
+                <h3>1. HIGHER TIMEFRAME (4H / 1H)</h3>
+
+                <div class="check-item">
+                    <input type="checkbox" class="task">
+                    <label>Identify market direction.</label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" class="task">
+                    <label>Mark key support/resistance and supply/demand.</label>
+                </div>
+            </div>
+
+            <div class="check-group">
+                <h3>2. LIQUIDITY (15M)</h3>
+
+                <div class="check-item">
+                    <input type="checkbox" class="task">
+                    <label>Mark previous day high and low.</label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" class="task">
+                    <label>Identify liquidity around swing highs/lows.</label>
+                </div>
+            </div>
+
+            <div class="check-group">
+                <h3>3. LIQUIDITY SWEEP (5M / 15M)</h3>
+
+                <div class="check-item">
+                    <input type="checkbox" class="task">
+                    <label>Wait for a liquidity sweep.</label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" class="task">
+                    <label>Confirm price rejection.</label>
+                </div>
+            </div>
+
+            <div class="check-group">
+                <h3>4. MARKET STRUCTURE (5M)</h3>
+
+                <div class="check-item">
+                    <input type="checkbox" class="task">
+                    <label>Confirm MSS or BOS.</label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" class="task">
+                    <label>Look for strong displacement.</label>
+                </div>
+            </div>
+
+            <div class="check-group">
+                <h3>5. ENTRY AREA (5M)</h3>
+
+                <div class="check-item">
+                    <input type="checkbox" class="task">
+                    <label>Identify FVG or Order Block.</label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" class="task">
+                    <label>Wait for price to return to the entry area.</label>
+                </div>
+
+                <div class="check-item">
+                    <input type="checkbox" class="task">
+                    <label>Confirm the setup and trade direction.</label>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- POSITION SIZE CALCULATOR -->
+
+        <section class="panel calculator-panel">
+
+            <h2>POSITION SIZE CALCULATOR</h2>
+
+            <p class="calculator-description">
+                Calculate your position size using account balance, risk percentage and stop-loss distance.
+            </p>
+
+            <div class="calculator-grid">
+
+                <div class="field">
+                    <label for="balance">Account Balance</label>
+                    <input type="number" id="balance" value="10000" min="0" step="any">
+                </div>
+
+                <div class="field">
+                    <label for="instrument">Currency Pair / Instrument</label>
+                    <select id="instrument">
+
+                        <optgroup label="Major Forex Pairs">
+                            <option value="EURUSD" selected>EUR/USD</option>
+                            <option value="GBPUSD">GBP/USD</option>
+                            <option value="USDJPY">USD/JPY</option>
+                            <option value="USDCHF">USD/CHF</option>
+                            <option value="USDCAD">USD/CAD</option>
+                            <option value="AUDUSD">AUD/USD</option>
+                            <option value="NZDUSD">NZD/USD</option>
+                        </optgroup>
+
+                        <optgroup label="EUR Crosses">
+                            <option value="EURGBP">EUR/GBP</option>
+                            <option value="EURJPY">EUR/JPY</option>
+                            <option value="EURCHF">EUR/CHF</option>
+                            <option value="EURCAD">EUR/CAD</option>
+                            <option value="EURAUD">EUR/AUD</option>
+                            <option value="EURNZD">EUR/NZD</option>
+                        </optgroup>
+
+                        <optgroup label="GBP Crosses">
+                            <option value="GBPJPY">GBP/JPY</option>
+                            <option value="GBPCHF">GBP/CHF</option>
+                            <option value="GBPCAD">GBP/CAD</option>
+                            <option value="GBPAUD">GBP/AUD</option>
+                            <option value="GBPNZD">GBP/NZD</option>
+                        </optgroup>
+
+                        <optgroup label="AUD Crosses">
+                            <option value="AUDJPY">AUD/JPY</option>
+                            <option value="AUDCHF">AUD/CHF</option>
+                            <option value="AUDCAD">AUD/CAD</option>
+                            <option value="AUDNZD">AUD/NZD</option>
+                        </optgroup>
+
+                        <optgroup label="NZD Crosses">
+                            <option value="NZDJPY">NZD/JPY</option>
+                            <option value="NZDCHF">NZD/CHF</option>
+                            <option value="NZDCAD">NZD/CAD</option>
+                        </optgroup>
+
+                        <optgroup label="CAD Crosses">
+                            <option value="CADJPY">CAD/JPY</option>
+                            <option value="CADCHF">CAD/CHF</option>
+                        </optgroup>
+
+                        <optgroup label="CHF Crosses">
+                            <option value="CHFJPY">CHF/JPY</option>
+                        </optgroup>
+
+                        <optgroup label="Common Exotic Pairs">
+                            <option value="USDZAR">USD/ZAR</option>
+                            <option value="USDMXN">USD/MXN</option>
+                            <option value="USDTRY">USD/TRY</option>
+                            <option value="USDSEK">USD/SEK</option>
+                            <option value="USDNOK">USD/NOK</option>
+                            <option value="USDSGD">USD/SGD</option>
+                            <option value="USDHKD">USD/HKD</option>
+                            <option value="USDPLN">USD/PLN</option>
+                            <option value="USDCNH">USD/CNH</option>
+                            <option value="EURTRY">EUR/TRY</option>
+                            <option value="EURZAR">EUR/ZAR</option>
+                            <option value="GBPZAR">GBP/ZAR</option>
+                        </optgroup>
+
+                        <optgroup label="Metals">
+                            <option value="XAUUSD">GOLD (XAU/USD)</option>
+                            <option value="XAGUSD">SILVER (XAG/USD)</option>
+                        </optgroup>
+
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="accountCurrency">Account Currency</label>
+                    <select id="accountCurrency">
+                        <option value="USD" selected>USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="JPY">JPY</option>
+                        <option value="CHF">CHF</option>
+                        <option value="CAD">CAD</option>
+                        <option value="AUD">AUD</option>
+                        <option value="NZD">NZD</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="risk">Risk Ratio (%)</label>
+                    <input type="number" id="risk" value="0.5" min="0.01" max="0.5" step="0.01">
+                </div>
+
+                <div class="field">
+                    <label for="stopLoss">Stop-Loss (Pips)</label>
+                    <input type="number" id="stopLoss" value="20" min="0" step="any">
+                </div>
+
+                <div class="field">
+                    <label for="conversion">Quote Currency to Account Currency Rate</label>
+                    <input type="number" id="conversion" value="1" min="0" step="any">
+                </div>
+
+            </div>
+
+            <p class="conversion-note">
+                Enter how much 1 unit of the pair's quote currency is worth in your account currency. For example, if the quote currency is JPY and your account is USD, enter the JPY-to-USD conversion rate.
+            </p>
+
+            <div class="calculator-results">
+
+                <div class="result-card">
+                    <span class="result-label">Risk Amount</span>
+                    <strong class="result-value" id="riskAmount">50.00 USD</strong>
+                </div>
+
+                <div class="result-card">
+                    <span class="result-label">Maximum Risk (0.5%)</span>
+                    <strong class="result-value" id="maxRisk">50.00 USD</strong>
+                </div>
+
+                <div class="result-card">
+                    <span class="result-label">Stop-Loss</span>
+                    <strong class="result-value" id="stopResult">20 Pips</strong>
+                </div>
+
+                <div class="result-card">
+                    <span class="result-label">Minimum Reward Target (1:2)</span>
+                    <strong class="result-value" id="targetResult">100.00 USD</strong>
+                </div>
+
+                <div class="lot-result">
+                    <span class="result-label">CALCULATED TRADE SIZE (LOTS)</span>
+                    <strong class="result-value" id="lotSize">0.250 Lots</strong>
+                </div>
+
+            </div>
+
+            <p class="calculator-error" id="calculatorError"></p>
+
+            <p class="small-note">
+                Educational calculator only. Uses simplified contract and pip assumptions.
+                Actual broker specifications, tick values, conversion rates, spreads and
+                commissions may differ. Exotic pairs and metals can have different contract
+                specifications. Always check instrument specifications.
+            </p>
+
+        </section>
+
+        <!-- ACCOUNT PROTECTION -->
+
+        <section class="panel">
+            <h2>ACCOUNT PROTECTION RULES</h2>
+            <div class="gold-line"></div>
+
+            <ul class="rules-list">
+                <li>Maximum risk per trade: 0.5% (educational limit).</li>
+                <li>Daily loss limit: 1%.</li>
+                <li>Weekly loss limit: 3%.</li>
+                <li>Maximum 3 trades per day.</li>
+                <li>Stop reviewing setups after 2 consecutive losses.</li>
+                <li>Minimum planned reward-to-risk: 1:2.</li>
+            </ul>
+        </section>
+
+        <!-- TRADING RULES -->
+
+        <section class="panel">
+            <h2>MY TRADING RULES</h2>
+            <div class="gold-line"></div>
+
+            <ul class="rules-list">
+                <li>Never force a setup.</li>
+                <li>Wait for confirmation.</li>
+                <li>Do not chase the market.</li>
+                <li>Follow the checklist before every demo trade.</li>
+                <li>Keep a trading journal.</li>
+                <li>Review mistakes and learn from them.</li>
+                <li>Protect your capital and avoid emotional decisions.</li>
+            </ul>
+        </section>
+
+        <!-- JOURNAL -->
+
+        <section class="panel">
+            <h2>YOUR TRADING JOURNAL</h2>
+            <div class="gold-line"></div>
+
+            <p style="text-shadow:2px 2px 5px black">
+                Save a screenshot of your completed checklist and entered information.
+            </p>
+
+            <div class="button-row">
+                <button class="screenshot-button" onclick="saveScreenshot()">
+                    SAVE TRADING SCREENSHOT
+                </button>
+
+                <button class="reset-button" onclick="resetChecklist()">
+                    RESET CHECKLIST
+                </button>
+            </div>
+        </section>
+
+        <footer>
+            <strong>NOLAN'S FOREX © 2026</strong>
+            <br>
+            Checklist And Calculator
+        </footer>
+
+    </div>
+</section>
+
+<script>
+
+/* PASSWORD */
+
+const WEBSITE_PASSWORD = "Fx@pass66";
+
+function unlockWebsite() {
+    const entered = document.getElementById("passwordInput").value;
+
+    if (entered === WEBSITE_PASSWORD) {
+        document.getElementById("welcomePage").style.display = "none";
+        document.getElementById("mainPage").style.display = "block";
+        loadChecklist();
+        calculatePosition();
+    } else {
+        document.getElementById("errorMessage").textContent =
+            "Incorrect password. Please try again.";
+    }
+}
+
+document.getElementById("passwordInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        unlockWebsite();
+    }
+});
+
+/* CHECKLIST PROGRESS */
+
+const tasks = document.querySelectorAll(".task");
+
+function updateProgress() {
+    const completed = document.querySelectorAll(".task:checked").length;
+    const total = tasks.length;
+    const percentage = (completed / total) * 100;
+
+    document.getElementById("progressText").textContent =
+        completed + " / " + total + " Completed";
+
+    document.getElementById("progressFill").style.width =
+        percentage + "%";
+
+    tasks.forEach((task, index) => {
+        localStorage.setItem("nolanTask" + index, task.checked);
+    });
+}
+
+function loadChecklist() {
+    tasks.forEach((task, index) => {
+        task.checked = localStorage.getItem("nolanTask" + index) === "true";
+    });
+
+    updateProgress();
+}
+
+tasks.forEach(task => {
+    task.addEventListener("change", updateProgress);
+});
+
+/* POSITION SIZE CALCULATOR */
+
+function calculatePosition() {
+    const balance = Number(document.getElementById("balance").value);
+    const riskPercent = Number(document.getElementById("risk").value);
+    const stop = Number(document.getElementById("stopLoss").value);
+    const conversion = Number(document.getElementById("conversion").value);
+
+    const instrument = document.getElementById("instrument").value;
+    const accountCurrency = document.getElementById("accountCurrency").value;
+
+    const error = document.getElementById("calculatorError");
+
+    error.textContent = "";
+
+    if (
+        !Number.isFinite(balance) ||
+        !Number.isFinite(riskPercent) ||
+        !Number.isFinite(stop) ||
+        !Number.isFinite(conversion) ||
+        balance <= 0 ||
+        riskPercent <= 0 ||
+        riskPercent > 0.5 ||
+        stop <= 0 ||
+        conversion <= 0
+    ) {
+        error.textContent =
+            "Please enter valid values. Risk must be 0.5% or less.";
+        return;
+    }
+
+    let pipValuePerLot;
+    let stopUnit = "Pips";
+
+    if (instrument === "XAUUSD") {
+        pipValuePerLot = 1 * conversion;
+        stopUnit = "Points";
+    } else if (instrument === "XAGUSD") {
+        pipValuePerLot = 5 * conversion;
+        stopUnit = "Points";
+    } else if (instrument.endsWith("JPY")) {
+        pipValuePerLot = 1000 * conversion;
+    } else {
+        pipValuePerLot = 10 * conversion;
+    }
+
+    const riskAmount = balance * (riskPercent / 100);
+    const maximumRisk = balance * 0.005;
+    const lotSize = riskAmount / (stop * pipValuePerLot);
+    const target = riskAmount * 2;
+
+    document.getElementById("riskAmount").textContent =
+        riskAmount.toFixed(2) + " " + accountCurrency;
+
+    document.getElementById("maxRisk").textContent =
+        maximumRisk.toFixed(2) + " " + accountCurrency;
+
+    document.getElementById("stopResult").textContent =
+        stop + " " + stopUnit;
+
+    document.getElementById("targetResult").textContent =
+        target.toFixed(2) + " " + accountCurrency;
+
+    document.getElementById("lotSize").textContent =
+        lotSize.toFixed(3) + " Lots";
+}
+
+/* AUTOMATIC CALCULATION */
+
+[
+    "balance",
+    "instrument",
+    "accountCurrency",
+    "risk",
+    "stopLoss",
+    "conversion"
+].forEach(id => {
+    document.getElementById(id).addEventListener("input", calculatePosition);
+    document.getElementById(id).addEventListener("change", calculatePosition);
+});
+
+/* SCREENSHOT */
+
+function saveScreenshot() {
+    if (typeof html2canvas === "undefined") {
+        alert("Screenshot library needs an internet connection. Please try again online.");
+        return;
+    }
+
+    html2canvas(document.querySelector("#mainPage"), {
+        useCORS: true,
+        scale: 1.5,
+        backgroundColor: "#080d18"
+    }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "Nolans-Forex-Checklist.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    }).catch(() => {
+        alert("Could not create screenshot. Please try again.");
+    });
+}
+
+/* RESET CHECKLIST */
+
+function resetChecklist() {
+    const confirmReset = confirm(
+        "Are you sure you want to reset all checklist progress?"
+    );
+
+    if (confirmReset) {
+        tasks.forEach((task, index) => {
+            task.checked = false;
+            localStorage.removeItem("nolanTask" + index);
+        });
+
+        updateProgress();
+    }
+}
+
+/* INITIAL CALCULATOR DISPLAY */
+
+calculatePosition();
+
+</script>
+
+</body>
+</html>
